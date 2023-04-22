@@ -29,12 +29,6 @@ public class UserFragment extends Fragment {
     private  FragmentUserBinding binding;
    // private UserViewModel userViewModel;
 
-
-
-
-
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         UserViewModel homeViewModel =

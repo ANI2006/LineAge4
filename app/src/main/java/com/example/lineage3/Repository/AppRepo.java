@@ -5,8 +5,10 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.lineage3.DataBase.AppDatabase;
+import com.example.lineage3.DataBase.RelationDao;
 import com.example.lineage3.DataBase.UserDao;
 import com.example.lineage3.ProjectModel;
+import com.example.lineage3.RelationUser;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -21,6 +23,8 @@ public abstract class AppRepo {
     private AppDatabase appDatabase;
 
     public abstract UserDao userDao();
+    public abstract RelationDao relationDao();
+
 //    public   abstract RelationsDao relationsDao();
 
 
@@ -82,5 +86,54 @@ public abstract class AppRepo {
 
 
 //relation
+
+    public void insertRelation(RelationUser relationUser) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.relationDao().insertRelation(relationUser);
+
+            }
+        });
+    }
+
+
+    public void updateRelation(RelationUser relationUser) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.relationDao().updateRelation(relationUser);
+            }
+        });
+    }
+
+    public void deleteRelation(RelationUser relationUser) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.relationDao().deleteRelation(relationUser);
+            }
+        });
+    }
+
+    public List<RelationUser> getAllRelationFuture() throws ExecutionException, InterruptedException {
+
+        Callable<List<RelationUser>> callable = new Callable<List<RelationUser>>() {
+            @Override
+            public List<RelationUser> call() throws Exception {
+                return appDatabase.relationDao().getAllRelationFuture();
+            }
+        };
+        Future<List<RelationUser>> future = Executors.newSingleThreadExecutor().submit(callable);
+        return future.get();
+    }
+
+    public LiveData<List<RelationUser>> getAllRelationLive() {
+
+        return appDatabase.relationDao().getAllRelationLive();
+
+    }
+
 
 }

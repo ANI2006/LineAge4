@@ -1,4 +1,4 @@
-package com.example.lineage3.ui.User;
+package com.example.lineage3.ui.relation;
 
 import android.app.Application;
 
@@ -11,17 +11,17 @@ import androidx.lifecycle.ViewModel;
 import com.example.lineage3.DataBase.RelationDao;
 import com.example.lineage3.DataBase.UserDao;
 import com.example.lineage3.ProjectModel;
+import com.example.lineage3.RelationUser;
 import com.example.lineage3.Repository.AppRepo;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class UserViewModel extends AndroidViewModel {
-
+public class RelationViewModel extends AndroidViewModel {
 
     private AppRepo appRepo;
 
-    public UserViewModel(@NonNull Application application) {
+    public RelationViewModel(@NonNull Application application) {
         super(application);
 
 
@@ -40,26 +40,29 @@ public class UserViewModel extends AndroidViewModel {
     }
 
 
-
-
-    public void insertUser(ProjectModel projectModel){
-        appRepo.insertUser(projectModel);
+    public void insertRelation(RelationUser relationUser){
+        appRepo.insertRelation(relationUser);
     }
 
-    public void updateUser(ProjectModel projectModel){
-        appRepo.updateUser(projectModel);
+    public void updateRelation(RelationUser relationUser){
+        appRepo.updateRelation(relationUser);
     }
 
-    public void deleteUser(ProjectModel projectModel){
-        appRepo.deleteUser(projectModel);
+    public void deleteRelation(RelationUser relationUser){
+        appRepo.deleteRelation(relationUser);
     }
 
-    public LiveData<List<ProjectModel>> getAllUserFuture() throws ExecutionException,InterruptedException{
-        return appRepo.getAllUserLive();
+    public LiveData<List<RelationUser>> getAllRelationFuture() throws ExecutionException,InterruptedException{
+        return appRepo.getAllRelationLive();
     }
 
-    public LiveData<List<ProjectModel>> getAllUserLive(){
-        return appRepo.getAllUserLive();
+    public LiveData<List<RelationUser>> getAllRelationLive(){
+        return appRepo.getAllRelationLive();
     }
+
+
+
+
+
 
 }
